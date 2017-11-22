@@ -1,0 +1,7 @@
+Configure miss: if -lm is required for maths functions
+Configure miss: __exp10
+Configure miss: _putenv_s
+Configure miss: closefrom
+Configure miss: valgrind/memcheck.h
+Configure miss: eatmydata
+Configure miss: whether to use SSE instructions on x86
