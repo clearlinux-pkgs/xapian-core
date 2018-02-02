@@ -4,7 +4,7 @@
 #
 Name     : xapian-core
 Version  : 1.4.5
-Release  : 1
+Release  : 2
 URL      : https://oligarchy.co.uk/xapian/1.4.5/xapian-core-1.4.5.tar.xz
 Source0  : https://oligarchy.co.uk/xapian/1.4.5/xapian-core-1.4.5.tar.xz
 Summary  : The Xapian Probabilistic Information Retrieval Library
