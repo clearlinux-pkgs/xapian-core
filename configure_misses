@@ -1,6 +1,9 @@
 Configure miss: if -lm is required for maths functions
-Configure miss: __exp10
-Configure miss: _putenv_s
+Configure miss: whether _byteswap_ushort is declared
+Configure miss: whether _byteswap_ulong is declared
+Configure miss: whether __popcnt is declared
+Configure miss: whether __popcnt64 is declared
+Configure miss: whether _putenv_s is declared
 Configure miss: closefrom
 Configure miss: valgrind/memcheck.h
 Configure miss: eatmydata
