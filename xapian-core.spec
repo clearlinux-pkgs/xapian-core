@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x18147B073BAD2B07 (olly@debian.org)
 #
 Name     : xapian-core
-Version  : 1.4.6
-Release  : 4
-URL      : https://oligarchy.co.uk/xapian/1.4.6/xapian-core-1.4.6.tar.xz
-Source0  : https://oligarchy.co.uk/xapian/1.4.6/xapian-core-1.4.6.tar.xz
-Source99 : https://oligarchy.co.uk/xapian/1.4.6/xapian-core-1.4.6.tar.xz.asc
+Version  : 1.4.7
+Release  : 5
+URL      : https://oligarchy.co.uk/xapian/1.4.7/xapian-core-1.4.7.tar.xz
+Source0  : https://oligarchy.co.uk/xapian/1.4.7/xapian-core-1.4.7.tar.xz
+Source99 : https://oligarchy.co.uk/xapian/1.4.7/xapian-core-1.4.7.tar.xz.asc
 Summary  : The Xapian Search Engine Library
 Group    : Development/Tools
 License  : GPL-2.0
@@ -95,14 +95,14 @@ man components for the xapian-core package.
 
 
 %prep
-%setup -q -n xapian-core-1.4.6
+%setup -q -n xapian-core-1.4.7
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1531156875
+export SOURCE_DATE_EPOCH=1532116561
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -114,7 +114,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1531156875
+export SOURCE_DATE_EPOCH=1532116561
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/xapian-core
 cp COPYING %{buildroot}/usr/share/doc/xapian-core/COPYING
@@ -210,7 +210,7 @@ cp COPYING %{buildroot}/usr/share/doc/xapian-core/COPYING
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libxapian.so.30
-/usr/lib64/libxapian.so.30.5.0
+/usr/lib64/libxapian.so.30.5.1
 
 %files license
 %defattr(-,root,root,-)
