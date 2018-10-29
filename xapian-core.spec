@@ -5,21 +5,21 @@
 # Source0 file verified with key 0x18147B073BAD2B07 (olly@debian.org)
 #
 Name     : xapian-core
-Version  : 1.4.7
-Release  : 5
-URL      : https://oligarchy.co.uk/xapian/1.4.7/xapian-core-1.4.7.tar.xz
-Source0  : https://oligarchy.co.uk/xapian/1.4.7/xapian-core-1.4.7.tar.xz
-Source99 : https://oligarchy.co.uk/xapian/1.4.7/xapian-core-1.4.7.tar.xz.asc
+Version  : 1.4.8
+Release  : 6
+URL      : https://oligarchy.co.uk/xapian/1.4.8/xapian-core-1.4.8.tar.xz
+Source0  : https://oligarchy.co.uk/xapian/1.4.8/xapian-core-1.4.8.tar.xz
+Source99 : https://oligarchy.co.uk/xapian/1.4.8/xapian-core-1.4.8.tar.xz.asc
 Summary  : The Xapian Search Engine Library
 Group    : Development/Tools
 License  : GPL-2.0
-Requires: xapian-core-bin
-Requires: xapian-core-lib
-Requires: xapian-core-license
-Requires: xapian-core-man
-Requires: xapian-core-data
-BuildRequires : pkgconfig(uuid)
+Requires: xapian-core-bin = %{version}-%{release}
+Requires: xapian-core-data = %{version}-%{release}
+Requires: xapian-core-lib = %{version}-%{release}
+Requires: xapian-core-license = %{version}-%{release}
+Requires: xapian-core-man = %{version}-%{release}
 BuildRequires : pkgconfig(zlib)
+BuildRequires : util-linux-dev
 BuildRequires : valgrind
 
 %description
@@ -31,9 +31,9 @@ also supports a rich set of boolean query operators.
 %package bin
 Summary: bin components for the xapian-core package.
 Group: Binaries
-Requires: xapian-core-data
-Requires: xapian-core-license
-Requires: xapian-core-man
+Requires: xapian-core-data = %{version}-%{release}
+Requires: xapian-core-license = %{version}-%{release}
+Requires: xapian-core-man = %{version}-%{release}
 
 %description bin
 bin components for the xapian-core package.
@@ -50,10 +50,10 @@ data components for the xapian-core package.
 %package dev
 Summary: dev components for the xapian-core package.
 Group: Development
-Requires: xapian-core-lib
-Requires: xapian-core-bin
-Requires: xapian-core-data
-Provides: xapian-core-devel
+Requires: xapian-core-lib = %{version}-%{release}
+Requires: xapian-core-bin = %{version}-%{release}
+Requires: xapian-core-data = %{version}-%{release}
+Provides: xapian-core-devel = %{version}-%{release}
 
 %description dev
 dev components for the xapian-core package.
@@ -62,7 +62,7 @@ dev components for the xapian-core package.
 %package doc
 Summary: doc components for the xapian-core package.
 Group: Documentation
-Requires: xapian-core-man
+Requires: xapian-core-man = %{version}-%{release}
 
 %description doc
 doc components for the xapian-core package.
@@ -71,8 +71,8 @@ doc components for the xapian-core package.
 %package lib
 Summary: lib components for the xapian-core package.
 Group: Libraries
-Requires: xapian-core-data
-Requires: xapian-core-license
+Requires: xapian-core-data = %{version}-%{release}
+Requires: xapian-core-license = %{version}-%{release}
 
 %description lib
 lib components for the xapian-core package.
@@ -95,14 +95,14 @@ man components for the xapian-core package.
 
 
 %prep
-%setup -q -n xapian-core-1.4.7
+%setup -q -n xapian-core-1.4.8
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1532116561
+export SOURCE_DATE_EPOCH=1540786641
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -114,10 +114,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1532116561
+export SOURCE_DATE_EPOCH=1540786641
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/xapian-core
-cp COPYING %{buildroot}/usr/share/doc/xapian-core/COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/xapian-core
+cp COPYING %{buildroot}/usr/share/package-licenses/xapian-core/COPYING
 %make_install
 
 %files
@@ -135,6 +135,7 @@ cp COPYING %{buildroot}/usr/share/doc/xapian-core/COPYING
 /usr/bin/xapian-config
 /usr/bin/xapian-delve
 /usr/bin/xapian-metadata
+/usr/bin/xapian-pos
 /usr/bin/xapian-progsrv
 /usr/bin/xapian-replicate
 /usr/bin/xapian-replicate-server
@@ -210,14 +211,14 @@ cp COPYING %{buildroot}/usr/share/doc/xapian-core/COPYING
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libxapian.so.30
-/usr/lib64/libxapian.so.30.5.1
+/usr/lib64/libxapian.so.30.6.0
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/xapian-core/COPYING
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/xapian-core/COPYING
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man1/copydatabase.1
 /usr/share/man/man1/quest.1
 /usr/share/man/man1/xapian-check.1
@@ -225,6 +226,7 @@ cp COPYING %{buildroot}/usr/share/doc/xapian-core/COPYING
 /usr/share/man/man1/xapian-config.1
 /usr/share/man/man1/xapian-delve.1
 /usr/share/man/man1/xapian-metadata.1
+/usr/share/man/man1/xapian-pos.1
 /usr/share/man/man1/xapian-progsrv.1
 /usr/share/man/man1/xapian-replicate-server.1
 /usr/share/man/man1/xapian-replicate.1

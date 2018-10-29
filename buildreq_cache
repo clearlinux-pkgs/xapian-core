@@ -1,4 +1,5 @@
-1.4.7
-pkgconfig(zlib)
-valgrind
+1.4.8
 pkgconfig(uuid)
+pkgconfig(zlib)
+util-linux-dev
+valgrind
