@@ -1,6 +1,7 @@
 Configure miss: if -lm is required for maths functions
 Configure miss: whether _byteswap_ushort is declared
 Configure miss: whether _byteswap_ulong is declared
+Configure miss: whether _byteswap_uint64 is declared
 Configure miss: whether __popcnt is declared
 Configure miss: whether __popcnt64 is declared
 Configure miss: whether _putenv_s is declared

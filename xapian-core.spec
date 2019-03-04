@@ -5,12 +5,12 @@
 # Source0 file verified with key 0x18147B073BAD2B07 (olly@debian.org)
 #
 Name     : xapian-core
-Version  : 1.4.9
-Release  : 7
-URL      : https://oligarchy.co.uk/xapian/1.4.9/xapian-core-1.4.9.tar.xz
-Source0  : https://oligarchy.co.uk/xapian/1.4.9/xapian-core-1.4.9.tar.xz
-Source99 : https://oligarchy.co.uk/xapian/1.4.9/xapian-core-1.4.9.tar.xz.asc
-Summary  : The Xapian Search Engine Library
+Version  : 1.4.11
+Release  : 8
+URL      : https://oligarchy.co.uk/xapian/1.4.11/xapian-core-1.4.11.tar.xz
+Source0  : https://oligarchy.co.uk/xapian/1.4.11/xapian-core-1.4.11.tar.xz
+Source99 : https://oligarchy.co.uk/xapian/1.4.11/xapian-core-1.4.11.tar.xz.asc
+Summary  : Open source search engine library.
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: xapian-core-bin = %{version}-%{release}
@@ -33,7 +33,6 @@ Summary: bin components for the xapian-core package.
 Group: Binaries
 Requires: xapian-core-data = %{version}-%{release}
 Requires: xapian-core-license = %{version}-%{release}
-Requires: xapian-core-man = %{version}-%{release}
 
 %description bin
 bin components for the xapian-core package.
@@ -53,7 +52,9 @@ Group: Development
 Requires: xapian-core-lib = %{version}-%{release}
 Requires: xapian-core-bin = %{version}-%{release}
 Requires: xapian-core-data = %{version}-%{release}
+Requires: xapian-core-man = %{version}-%{release}
 Provides: xapian-core-devel = %{version}-%{release}
+Requires: xapian-core = %{version}-%{release}
 
 %description dev
 dev components for the xapian-core package.
@@ -95,14 +96,14 @@ man components for the xapian-core package.
 
 
 %prep
-%setup -q -n xapian-core-1.4.9
+%setup -q -n xapian-core-1.4.11
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1541200032
+export SOURCE_DATE_EPOCH=1551724754
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -114,7 +115,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1541200032
+export SOURCE_DATE_EPOCH=1551724754
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/xapian-core
 cp COPYING %{buildroot}/usr/share/package-licenses/xapian-core/COPYING
@@ -211,7 +212,7 @@ cp COPYING %{buildroot}/usr/share/package-licenses/xapian-core/COPYING
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libxapian.so.30
-/usr/lib64/libxapian.so.30.6.1
+/usr/lib64/libxapian.so.30.8.0
 
 %files license
 %defattr(0644,root,root,0755)
