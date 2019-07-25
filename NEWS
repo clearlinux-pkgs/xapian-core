@@ -1,3 +1,154 @@
+Xapian-core 1.4.12 (2019-07-23):
+
+API:
+
+* Xapian::PostingSource: When a PostingSource without a clone() method is used
+  with a Database containing multiple shards, the documented behaviour has
+  always been that Xapian::InvalidOperationError is thrown.  However, since at
+  least 1.4.0, this exception hasn't been thrown, but instead a single
+  PostingSource object would get used for all the shards, typically leading to
+  incorrect results.  The actual behaviour now matches what was documented.
+
+* Xapian::Database: Add size() method which reports the number of shards.
+
+* Xapian::Database::check(): You can now pass a stub database which will check
+  all the databases listed in it (or throw Xapian::UnimplementError for
+  backends which don't support checking).
+
+* Xapian::Document: When updating a document use a emplace_hint() to make the
+  bulk insertion O(n) instead of O(n·log(n)), and use std::move() to avoid
+  copying OmDocumentTerm objects.
+
+* Xapian::Query: Add missing get_unique_terms_end() method.
+
+* Xapian::iterator_valid(): Implement for Utf8Iterator
+
+testsuite:
+
+* Fix keepalive1 failures on some platforms.  On some platforms a timeout
+  gives NetworkTimeoutError and on others NetworkError - since 1.4.10 changed
+  to checking the exact exception type, keepalive1 has been failing on the
+  former set of platforms.  We now just check for NetworkError or a subclass
+  here (since NetworkTimeoutError is a subclass of NetworkError).
+
+* Run cursordelbug1 testcase with multi databases too.
+
+matcher:
+
+* Ownership of PostingSource objects during the match now makes use of the
+  optional reference-counting mechanism rather than a separate flag.
+
+remote backend:
+
+* Fix remote protocol design bug.  Previously some messages didn't send a reply
+  but could result in an exception being sent over the link.  That exception
+  would then get read as a response to the next message instead of its actual
+  response so we'd be out of step.  Fixes #783, reported by Germán M. Bravo.
+  This fix necessitated a minor version bump in the remote protocol (to 39.1).
+  If you are upgrading a live system which uses the remote backend, upgrade the
+  servers before the clients.
+
+* Fix socket leaks on errors during opening a database.  Fixes
+  https://github.com/xapian/xapian/pull/237 and #781, reported by Germán M.
+  Bravo.
+
+* Don't close remote DB socket on receiving EOF as the levels above won't
+  know it's been closed and may try to perform operations on it, which would be
+  problematic if that fd gets reused in the meantime.  Leaving it open means
+  any further operations will also get EOF.  Reported by Germán M. Bravo.
+
+* We add a wrapper around the libc socket() function which deals with the
+  corner case where SOCK_CLOEXEC is defined but socket() fails if it is
+  specified (which can happen with a newer libc and older kernel).
+  Unfortunately, this wrapper wasn't checking the returned value from socket()
+  correctly, so when SOCK_CLOEXEC was specified and non-zero it would create
+  the socket() with SOCK_CLOEXEC, then leak that one and create it again
+  without SOCK_CLOEXEC.  We now check the return value properly.
+
+* Fix potential infinite loop in ValueCountMatchSpy::merge_results() if passed
+  serialised results with extra data appended (which shouldn't happen in normal
+  use).
+
+build system:
+
+* Current versions of valgrind result in false positives on current versions of
+  macOS, so on this platform configure now only enables use of valgrind if it's
+  specified explicitly.  Fixes #713, reported by Germán M. Bravo.
+
+* Refactor macros to probe for compiler flags so they automatically cache
+  their results and consistently report success/failure.
+
+* Rename our custom TYPE_SOCKLEN_T macro to XAPIAN_TYPE_SOCKLEN_T.  The
+  AX_TYPE_SOCKLEN_T macro defines an alias of TYPE_SOCKLEN_T for itself which
+  means it can get used instead in some situations, but it isn't compatible
+  with our macro.  We can't just switch to AX_TYPE_SOCKLEN_T as it doesn't
+  handle cases we need, so just rename our macro to avoid potential problems.
+
+documentation:
+
+* Improve API documentation for Xapian::Query class.  Add missing doc
+  comments and improve some of the existing ones.  Problems highlighted by
+  Дилян Палаузов in #790.
+
+* Add Unicode consortium names and codes for categories from Chapter 4, Version
+  11 of the Unicode standard.  Patch from David Bremner.
+
+* Improve configure --help output - drop "[default=no]" for --enable-*
+  options which default off.  Fixes #791, reported by and patch from Дилян
+  Палаузов.
+
+* Fix API documentation typo - Query::op (the type) not op_ (a parameter name).
+
+* Note which version Document::remove_postings() was added in.
+
+* In the remote protocol documentation, MSG_REPLACEDOCUMENTTERM was documented
+  as not having a reply, but actually REPLY_ADDDOCUMENT is sent.
+
+* Update list of <xapian/iterator.h> users.
+
+tools:
+
+* copydatabase: A change in 1.4.6 which added support for \ as directory
+  separator on platforms where that's the norm broke the code in copydatabase
+  which removes a trailing slash from input databases.  Bug reported and
+  culprit commit identified by Eric Wong.
+
+portability:
+
+* Resolve crash on Windows when using clang-cl and MSVC.  Reported by Christian
+  Mollekopf in https://github.com/xapian/xapian/pull/256.
+
+* Add missing '#include <cstring>'.  Patch from Tanmay Sachan.
+
+* Fix str() helper function when converting the most negative value
+  of a signed integer type.
+
+* Avoid calling close() on fd we know must actually be a WIN32 SOCKET.
+
+* Include <ios> not <iomanip> for std::boolalpha.
+
+* Rework setenv() compatibility handling.  Now that Solaris 9 is dead we can
+  assume setenv() is provided by Unix-like platforms (POSIX requires it).  For
+  other platforms, provide a compatibility implementation of setenv() which
+  so the compatibility code is encapsulated in one place rather than replicated
+  at every use.
+
+* Fix maintainer-mode builds on Solaris where /bin/tr is not POSIX compliant.
+  We now use the simple workaround suggested by the autoconf manual.
+
+* Improve support for Sun C++ (see #631):
+
+  + Suppress unhelpful warning for lambda with multiple return statements.
+
+  + Enable reporting the tags corresponding to warnings, which we need
+    to know in order to suppress any new unhelpful warnings.
+
+  + Adjust our workaround for bug with this compiler's <cmath> header to avoid
+    a compiler warning.
+
+  + Use -xldscope=symbolic for Sun C++.  This flag is roughly equivalent to
+    -Bsymbolic-functions which we've probed for with GNU ld since Xapian 1.0.0.
+
 Xapian-core 1.4.11 (2019-03-02):
 
 API:

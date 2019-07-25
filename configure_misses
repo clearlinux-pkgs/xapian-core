@@ -4,8 +4,10 @@ Configure miss: whether _byteswap_ulong is declared
 Configure miss: whether _byteswap_uint64 is declared
 Configure miss: whether __popcnt is declared
 Configure miss: whether __popcnt64 is declared
+Configure miss: _putenv_s
 Configure miss: whether _putenv_s is declared
 Configure miss: closefrom
 Configure miss: valgrind/memcheck.h
 Configure miss: eatmydata
+Configure miss: g++ with -xldscope=symbolic in LDFLAGS
 Configure miss: whether to use SSE instructions on x86
