@@ -6,7 +6,7 @@
 #
 Name     : xapian-core
 Version  : 1.4.12
-Release  : 9
+Release  : 10
 URL      : https://oligarchy.co.uk/xapian/1.4.12/xapian-core-1.4.12.tar.xz
 Source0  : https://oligarchy.co.uk/xapian/1.4.12/xapian-core-1.4.12.tar.xz
 Source99 : https://oligarchy.co.uk/xapian/1.4.12/xapian-core-1.4.12.tar.xz.asc
