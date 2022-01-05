@@ -1,6 +1,5 @@
 Configure miss: _putenv_s
 Configure miss: _sys_errlist and _sys_nerr
-Configure miss: closefrom
 Configure miss: eatmydata
 Configure miss: g++ with -xldscope=symbolic in LDFLAGS
 Configure miss: if -lm is required for maths functions
