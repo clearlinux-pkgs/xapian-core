@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x18147B073BAD2B07 (olly@debian.org)
 #
 Name     : xapian-core
-Version  : 1.4.19
-Release  : 12
-URL      : https://oligarchy.co.uk/xapian/1.4.19/xapian-core-1.4.19.tar.xz
-Source0  : https://oligarchy.co.uk/xapian/1.4.19/xapian-core-1.4.19.tar.xz
-Source1  : https://oligarchy.co.uk/xapian/1.4.19/xapian-core-1.4.19.tar.xz.asc
+Version  : 1.4.20
+Release  : 13
+URL      : https://oligarchy.co.uk/xapian/1.4.20/xapian-core-1.4.20.tar.xz
+Source0  : https://oligarchy.co.uk/xapian/1.4.20/xapian-core-1.4.20.tar.xz
+Source1  : https://oligarchy.co.uk/xapian/1.4.20/xapian-core-1.4.20.tar.xz.asc
 Summary  : The Xapian Search Engine Library
 Group    : Development/Tools
 License  : GPL-2.0
@@ -94,8 +94,8 @@ man components for the xapian-core package.
 
 
 %prep
-%setup -q -n xapian-core-1.4.19
-cd %{_builddir}/xapian-core-1.4.19
+%setup -q -n xapian-core-1.4.20
+cd %{_builddir}/xapian-core-1.4.20
 
 %build
 ## build_prepend content
@@ -107,7 +107,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1641410811
+export SOURCE_DATE_EPOCH=1657041972
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -127,10 +127,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1641410811
+export SOURCE_DATE_EPOCH=1657041972
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/xapian-core
-cp %{_builddir}/xapian-core-1.4.19/COPYING %{buildroot}/usr/share/package-licenses/xapian-core/4d1d37f306ed270cda5b2741fac3abf0a7b012e5
+cp %{_builddir}/xapian-core-1.4.20/COPYING %{buildroot}/usr/share/package-licenses/xapian-core/4d1d37f306ed270cda5b2741fac3abf0a7b012e5
 %make_install
 
 %files
@@ -224,7 +224,7 @@ cp %{_builddir}/xapian-core-1.4.19/COPYING %{buildroot}/usr/share/package-licens
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libxapian.so.30
-/usr/lib64/libxapian.so.30.12.0
+/usr/lib64/libxapian.so.30.12.1
 
 %files license
 %defattr(0644,root,root,0755)
