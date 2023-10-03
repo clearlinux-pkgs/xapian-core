@@ -1,19 +1,38 @@
 Configure miss: _putenv_s
+Configure miss: _putenv_s
+Configure miss: _sys_errlist and _sys_nerr
 Configure miss: _sys_errlist and _sys_nerr
 Configure miss: eatmydata
+Configure miss: eatmydata
+Configure miss: g++ option to enable C++11 features
 Configure miss: g++ option to enable C++11 features
 Configure miss: g++ options needed to detect all undeclared functions
+Configure miss: g++ options needed to detect all undeclared functions
+Configure miss: g++ with -xldscope=symbolic in LDFLAGS
 Configure miss: g++ with -xldscope=symbolic in LDFLAGS
 Configure miss: if -lm is required for maths functions
+Configure miss: if -lm is required for maths functions
+Configure miss: sys_errlist and sys_nerr
 Configure miss: sys_errlist and sys_nerr
 Configure miss: whether __popcnt is declared
+Configure miss: whether __popcnt is declared
+Configure miss: whether __popcnt64 is declared
 Configure miss: whether __popcnt64 is declared
 Configure miss: whether _addcarry_u32 is declared
+Configure miss: whether _addcarry_u32 is declared
+Configure miss: whether _addcarry_u64 is declared
 Configure miss: whether _addcarry_u64 is declared
 Configure miss: whether _byteswap_uint64 is declared
+Configure miss: whether _byteswap_uint64 is declared
+Configure miss: whether _byteswap_ulong is declared
 Configure miss: whether _byteswap_ulong is declared
 Configure miss: whether _byteswap_ushort is declared
+Configure miss: whether _byteswap_ushort is declared
+Configure miss: whether _putenv_s is declared
 Configure miss: whether _putenv_s is declared
 Configure miss: whether _subborrow_u32 is declared
+Configure miss: whether _subborrow_u32 is declared
 Configure miss: whether _subborrow_u64 is declared
+Configure miss: whether _subborrow_u64 is declared
+Configure miss: whether to use SSE instructions on x86
 Configure miss: whether to use SSE instructions on x86

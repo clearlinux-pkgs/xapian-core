@@ -6,11 +6,11 @@
 # Source0 file verified with key 0x18147B073BAD2B07 (olly@debian.org)
 #
 Name     : xapian-core
-Version  : 1.4.22
-Release  : 15
-URL      : https://oligarchy.co.uk/xapian/1.4.22/xapian-core-1.4.22.tar.xz
-Source0  : https://oligarchy.co.uk/xapian/1.4.22/xapian-core-1.4.22.tar.xz
-Source1  : https://oligarchy.co.uk/xapian/1.4.22/xapian-core-1.4.22.tar.xz.asc
+Version  : 1.4.23
+Release  : 16
+URL      : https://oligarchy.co.uk/xapian/1.4.23/xapian-core-1.4.23.tar.xz
+Source0  : https://oligarchy.co.uk/xapian/1.4.23/xapian-core-1.4.23.tar.xz
+Source1  : https://oligarchy.co.uk/xapian/1.4.23/xapian-core-1.4.23.tar.xz.asc
 Summary  : The Xapian Search Engine Library
 Group    : Development/Tools
 License  : GPL-2.0
@@ -99,8 +99,11 @@ man components for the xapian-core package.
 
 
 %prep
-%setup -q -n xapian-core-1.4.22
-cd %{_builddir}/xapian-core-1.4.22
+%setup -q -n xapian-core-1.4.23
+cd %{_builddir}/xapian-core-1.4.23
+pushd ..
+cp -a xapian-core-1.4.23 buildavx2
+popd
 
 %build
 ## build_prepend content
@@ -112,37 +115,83 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1680651787
+export SOURCE_DATE_EPOCH=1696364660
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FCFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS"
+CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS"
+FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
+FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
+ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
+LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
 %configure --disable-static
 make  %{?_smp_mflags}
 
-%check
-export LANG=C.UTF-8
-export http_proxy=http://127.0.0.1:9/
-export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost,127.0.0.1,0.0.0.0
-make %{?_smp_mflags} check
-
+unset PKG_CONFIG_PATH
+pushd ../buildavx2/
+## build_prepend content
+# Avoid detection of zlib invalid read by not running test suite through valgrind.
+# Reference: https://github.com/jtkukunas/zlib/pull/32
+export VALGRIND=""
+## build_prepend end
+CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS -m64 -march=x86-64-v3 "
+LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3 "
+%configure --disable-static
+make  %{?_smp_mflags}
+popd
 %install
-export SOURCE_DATE_EPOCH=1680651787
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FCFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS"
+CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS"
+FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
+FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
+ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
+LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
+export SOURCE_DATE_EPOCH=1696364660
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/xapian-core
 cp %{_builddir}/xapian-core-%{version}/COPYING %{buildroot}/usr/share/package-licenses/xapian-core/4d1d37f306ed270cda5b2741fac3abf0a7b012e5 || :
+pushd ../buildavx2/
+%make_install_v3
+popd
 %make_install
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
 
 %files bin
 %defattr(-,root,root,-)
+/V3/usr/bin/copydatabase
+/V3/usr/bin/quest
+/V3/usr/bin/simpleexpand
+/V3/usr/bin/simpleindex
+/V3/usr/bin/simplesearch
+/V3/usr/bin/xapian-check
+/V3/usr/bin/xapian-compact
+/V3/usr/bin/xapian-delve
+/V3/usr/bin/xapian-metadata
+/V3/usr/bin/xapian-pos
+/V3/usr/bin/xapian-progsrv
+/V3/usr/bin/xapian-replicate
+/V3/usr/bin/xapian-replicate-server
+/V3/usr/bin/xapian-tcpsrv
 /usr/bin/copydatabase
 /usr/bin/quest
 /usr/bin/simpleexpand
@@ -224,12 +273,13 @@ cp %{_builddir}/xapian-core-%{version}/COPYING %{buildroot}/usr/share/package-li
 
 %files doc
 %defattr(0644,root,root,0755)
-%doc /usr/share/doc/xapian\-core/*
+/usr/share/doc/xapian\-core/*
 
 %files lib
 %defattr(-,root,root,-)
+/V3/usr/lib64/libxapian.so.30.12.4
 /usr/lib64/libxapian.so.30
-/usr/lib64/libxapian.so.30.12.3
+/usr/lib64/libxapian.so.30.12.4
 
 %files license
 %defattr(0644,root,root,0755)
