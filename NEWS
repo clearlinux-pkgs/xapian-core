@@ -1,3 +1,21 @@
+Xapian-core 1.4.27 (2024-12-06):
+
+testsuite:
+
+* Fix testcase unsupportedcheck1 for --disable-backend-remote.  Reported by
+  Matthieu Gautier in #832.
+
+* Merge testcases unsupportedcheck1 and stubdb9 which are essentially the same
+  testcase!
+
+build system:
+
+* Fix build with --disable-backend-chert.  Patch from Matthieu Gautier in #832.
+
+portability:
+
+* Add missing include of <cerrno> to fix build failure on macOS 15.
+
 Xapian-core 1.4.26 (2024-07-18):
 
 API:
