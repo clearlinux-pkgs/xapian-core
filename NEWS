@@ -1,3 +1,50 @@
+Xapian-core 1.4.28 (2025-04-17):
+
+API:
+
+* Stem:
+
+  + Optimise stemming algorithms.  The biggest improvement is for Tamil where
+    there's a 47% reduction in the time taken to stem all the words in our test
+    vocabulary.  Less dramatic improvements for Arabic, Danish, Dutch, English,
+    French, Finnish, Irish, Kraaij-Pohlmann, Lithuanian, Norwegian, Swedish and
+    Turkish.
+
+  + Add dutch_porter as alias for current dutch stemmer for forward
+    compatibility with the next release series where we will have
+    kraaij_pohlmann as the default dutch stemmer.
+
+testsuite:
+
+* stemtest: Add support for gzipped vocabulary lists, which means we
+  no longer skip testcase stemdict for Arabic.
+
+glass backend:
+
+* Improve exception message when asked to store too large a tag.  Reported by
+  Jean-Francois Dockes on xapian-discuss.
+
+* Optimise reading tag.  A special case for handling the first chunk of an item
+  gives a measurable speed improvement.  Reported by uis.
+
+portability:
+
+* Work around autoconf 2.72 AC_SYS_LARGEFILE bug.  This configure probe always
+  fails when run with the C++ compiler, like we do, which leads to large file
+  support not being enabled when it isn't the default (e.g. on 32-bit Linux
+  platforms).  Reported by Adrian Bunk.
+
+* Fix C23 compatibility issues.  GCC 15 fails with compile errors due to C23
+  dropping support for old-style function declarations and function
+  definitions.
+
+* Avoid calling frexp() on infinity or NaN.  The specification for frexp() says
+  it returns an "unspecified" exponent for these cases.  Reported by awilfox.
+
+* Fix GCC warning with 32-bit off_t.  Reported by Adrian Bunk.
+
+* Fix compile error with newer emscripten.
+
 Xapian-core 1.4.27 (2024-12-06):
 
 testsuite:

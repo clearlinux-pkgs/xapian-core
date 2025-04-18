@@ -38,5 +38,3 @@ Configure miss: whether _subborrow_u64 is declared
 Configure miss: whether _subborrow_u64 is declared
 Configure miss: whether to use SSE instructions on x86
 Configure miss: whether to use SSE instructions on x86
-Configure miss: x86_64-generic-linux-gnu-file
-Configure miss: x86_64-generic-linux-gnu-file

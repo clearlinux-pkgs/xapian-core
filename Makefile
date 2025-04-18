@@ -1,5 +1,5 @@
 PKG_NAME := xapian-core
-URL = https://oligarchy.co.uk/xapian/1.4.27/xapian-core-1.4.27.tar.xz
+URL = https://oligarchy.co.uk/xapian/1.4.28/xapian-core-1.4.28.tar.xz
 ARCHIVES = 
 
 include ../common/Makefile.common
