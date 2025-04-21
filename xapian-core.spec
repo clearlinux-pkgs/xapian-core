@@ -8,11 +8,11 @@
 # Source0 file verified with key 0x18147B073BAD2B07 (olly@debian.org)
 #
 Name     : xapian-core
-Version  : 1.4.28
-Release  : 21
-URL      : https://oligarchy.co.uk/xapian/1.4.28/xapian-core-1.4.28.tar.xz
-Source0  : https://oligarchy.co.uk/xapian/1.4.28/xapian-core-1.4.28.tar.xz
-Source1  : https://oligarchy.co.uk/xapian/1.4.28/xapian-core-1.4.28.tar.xz.asc
+Version  : 1.4.29
+Release  : 22
+URL      : https://oligarchy.co.uk/xapian/1.4.29/xapian-core-1.4.29.tar.xz
+Source0  : https://oligarchy.co.uk/xapian/1.4.29/xapian-core-1.4.29.tar.xz
+Source1  : https://oligarchy.co.uk/xapian/1.4.29/xapian-core-1.4.29.tar.xz.asc
 Source2  : 18147B073BAD2B07.pkey
 Summary  : The Xapian Search Engine Library
 Group    : Development/Tools
@@ -108,10 +108,10 @@ chmod 700 .gnupg
 gpg --homedir .gnupg --import %{SOURCE2}
 gpg --homedir .gnupg --status-fd 1 --verify %{SOURCE1} %{SOURCE0} > gpg.status
 grep -E '^\[GNUPG:\] (GOODSIG|EXPKEYSIG) 18147B073BAD2B07' gpg.status
-%setup -q -n xapian-core-1.4.28
-cd %{_builddir}/xapian-core-1.4.28
+%setup -q -n xapian-core-1.4.29
+cd %{_builddir}/xapian-core-1.4.29
 pushd ..
-cp -a xapian-core-1.4.28 buildavx2
+cp -a xapian-core-1.4.29 buildavx2
 popd
 
 %build
@@ -124,7 +124,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1744985543
+export SOURCE_DATE_EPOCH=1745247335
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -174,7 +174,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1744985543
+export SOURCE_DATE_EPOCH=1745247335
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/xapian-core
 cp %{_builddir}/xapian-core-%{version}/COPYING %{buildroot}/usr/share/package-licenses/xapian-core/4d1d37f306ed270cda5b2741fac3abf0a7b012e5 || :
@@ -291,9 +291,9 @@ GOAMD64=v2
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libxapian.so.29.14.0
-/usr/lib64/libxapian.so.29
-/usr/lib64/libxapian.so.29.14.0
+/V3/usr/lib64/libxapian.so.30.14.1
+/usr/lib64/libxapian.so.30
+/usr/lib64/libxapian.so.30.14.1
 
 %files license
 %defattr(0644,root,root,0755)
